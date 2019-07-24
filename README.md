@@ -5,10 +5,6 @@ Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colours) in Go (Golang). It
 has support for Windows too! The API can be used in several ways, pick one that
 suits you.
 
-
-![Colour](https://i.imgur.com/c1JI0lA.png)
-
-
 ## Install
 
 ```bash
