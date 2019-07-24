@@ -1,4 +1,4 @@
-package color
+package colour
 
 import (
 	"bytes"
@@ -9,16 +9,16 @@ import (
 	"github.com/mattn/go-colorable"
 )
 
-// Testing colors is kinda different. First we test for given colors and their
+// Testing colours is kinda different. First we test for given colours and their
 // escaped formatted results. Next we create some visual tests to be tested.
-// Each visual test includes the color name to be compared.
-func TestColor(t *testing.T) {
+// Each visual test includes the colour name to be compared.
+func TestColour(t *testing.T) {
 	rb := new(bytes.Buffer)
 	Output = rb
 
-	NoColor = false
+	NoColour = false
 
-	testColors := []struct {
+	testColours := []struct {
 		text string
 		code Attribute
 	}{
@@ -40,13 +40,13 @@ func TestColor(t *testing.T) {
 		{text: "hwhite", code: FgHiWhite},
 	}
 
-	for _, c := range testColors {
+	for _, c := range testColours {
 		New(c.code).Print(c.text)
 
 		line, _ := rb.ReadString('\n')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
-		escapedForm := fmt.Sprintf("%q", colored)
+		coloured := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
+		escapedForm := fmt.Sprintf("%q", coloured)
 
 		fmt.Printf("%s\t: %s\n", c.text, line)
 
@@ -55,11 +55,11 @@ func TestColor(t *testing.T) {
 		}
 	}
 
-	for _, c := range testColors {
+	for _, c := range testColours {
 		line := New(c.code).Sprintf("%s", c.text)
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
-		escapedForm := fmt.Sprintf("%q", colored)
+		coloured := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
+		escapedForm := fmt.Sprintf("%q", coloured)
 
 		fmt.Printf("%s\t: %s\n", c.text, line)
 
@@ -69,7 +69,7 @@ func TestColor(t *testing.T) {
 	}
 }
 
-func TestColorEquals(t *testing.T) {
+func TestColourEquals(t *testing.T) {
 	fgblack1 := New(FgBlack)
 	fgblack2 := New(FgBlack)
 	bgblack := New(BgBlack)
@@ -79,15 +79,15 @@ func TestColorEquals(t *testing.T) {
 	bgred := New(BgRed)
 
 	if !fgblack1.Equals(fgblack2) {
-		t.Error("Two black colors are not equal")
+		t.Error("Two black colours are not equal")
 	}
 
 	if fgblack1.Equals(bgblack) {
-		t.Error("Fg and bg black colors are equal")
+		t.Error("Fg and bg black colours are equal")
 	}
 
 	if fgblack1.Equals(fgbgblack) {
-		t.Error("Fg black equals fg/bg black color")
+		t.Error("Fg black equals fg/bg black colour")
 	}
 
 	if fgblack1.Equals(fgred) {
@@ -103,11 +103,11 @@ func TestColorEquals(t *testing.T) {
 	}
 }
 
-func TestNoColor(t *testing.T) {
+func TestNoColour(t *testing.T) {
 	rb := new(bytes.Buffer)
 	Output = rb
 
-	testColors := []struct {
+	testColours := []struct {
 		text string
 		code Attribute
 	}{
@@ -129,9 +129,9 @@ func TestNoColor(t *testing.T) {
 		{text: "hwhite", code: FgHiWhite},
 	}
 
-	for _, c := range testColors {
+	for _, c := range testColours {
 		p := New(c.code)
-		p.DisableColor()
+		p.DisableColour()
 		p.Print(c.text)
 
 		line, _ := rb.ReadString('\n')
@@ -141,11 +141,11 @@ func TestNoColor(t *testing.T) {
 	}
 
 	// global check
-	NoColor = true
+	NoColour = true
 	defer func() {
-		NoColor = false
+		NoColour = false
 	}()
-	for _, c := range testColors {
+	for _, c := range testColours {
 		p := New(c.code)
 		p.Print(c.text)
 
@@ -157,7 +157,7 @@ func TestNoColor(t *testing.T) {
 
 }
 
-func TestColorVisual(t *testing.T) {
+func TestColourVisual(t *testing.T) {
 	// First Visual Test
 	Output = colorable.NewColorableStdout()
 

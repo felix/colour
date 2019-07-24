@@ -1,55 +1,55 @@
-# Color
+# Colour
 
-Color lets you use colorized outputs in terms of [ANSI Escape
-Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
+Colour lets you use colourized outputs in terms of [ANSI Escape
+Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colours) in Go (Golang). It
 has support for Windows too! The API can be used in several ways, pick one that
 suits you.
 
 
-![Color](https://i.imgur.com/c1JI0lA.png)
+![Colour](https://i.imgur.com/c1JI0lA.png)
 
 
 ## Install
 
 ```bash
-go get github.com/felix/color
+go get github.com/felix/colour
 ```
 
 ## Examples
 
-### Standard colors
+### Standard colours
 
 ```go
 // Print with default helper functions
-color.Cyan("Prints text in cyan.")
+colour.Cyan("Prints text in cyan.")
 
 // A newline will be appended automatically
-color.Blue("Prints %s in blue.", "text")
+colour.Blue("Prints %s in blue.", "text")
 
-// These are using the default foreground colors
-color.Red("We have red")
-color.Magenta("And many others ..")
+// These are using the default foreground colours
+colour.Red("We have red")
+colour.Magenta("And many others ..")
 
 ```
 
-### Mix and reuse colors
+### Mix and reuse colours
 
 ```go
-// Create a new color object
-c := color.New(color.FgCyan).Add(color.Underline)
+// Create a new colour object
+c := colour.New(colour.FgCyan).Add(colour.Underline)
 c.Println("Prints cyan text with an underline.")
 
 // Or just add them to New()
-d := color.New(color.FgCyan, color.Bold)
+d := colour.New(colour.FgCyan, colour.Bold)
 d.Printf("This prints bold cyan %s\n", "too!.")
 
-// Mix up foreground and background colors, create new mixes!
-red := color.New(color.FgRed)
+// Mix up foreground and background colours, create new mixes!
+red := colour.New(colour.FgRed)
 
-boldRed := red.Add(color.Bold)
+boldRed := red.Add(colour.Bold)
 boldRed.Println("This will print text in bold red.")
 
-whiteBackground := red.Add(color.BgWhite)
+whiteBackground := red.Add(colour.BgWhite)
 whiteBackground.Println("Red text with white background.")
 ```
 
@@ -57,9 +57,9 @@ whiteBackground.Println("Red text with white background.")
 
 ```go
 // Use your own io.Writer output
-color.New(color.FgBlue).Fprintln(myWriter, "blue color!")
+colour.New(colour.FgBlue).Fprintln(myWriter, "blue colour!")
 
-blue := color.New(color.FgBlue)
+blue := colour.New(colour.FgBlue)
 blue.Fprint(writer, "This will print text in blue.")
 ```
 
@@ -67,93 +67,93 @@ blue.Fprint(writer, "This will print text in blue.")
 
 ```go
 // Create a custom print function for convenience
-red := color.New(color.FgRed).PrintfFunc()
+red := colour.New(colour.FgRed).PrintfFunc()
 red("Warning")
 red("Error: %s", err)
 
 // Mix up multiple attributes
-notice := color.New(color.Bold, color.FgGreen).PrintlnFunc()
+notice := colour.New(colour.Bold, colour.FgGreen).PrintlnFunc()
 notice("Don't forget this...")
 ```
 
 ### Custom fprint functions (FprintFunc)
 
 ```go
-blue := color.New(FgBlue).FprintfFunc()
+blue := colour.New(FgBlue).FprintfFunc()
 blue(myWriter, "important notice: %s", stars)
 
 // Mix up with multiple attributes
-success := color.New(color.Bold, color.FgGreen).FprintlnFunc()
+success := colour.New(colour.Bold, colour.FgGreen).FprintlnFunc()
 success(myWriter, "Don't forget this...")
 ```
 
-### Insert into noncolor strings (SprintFunc)
+### Insert into noncolour strings (SprintFunc)
 
 ```go
-// Create SprintXxx functions to mix strings with other non-colorized strings:
-yellow := color.New(color.FgYellow).SprintFunc()
-red := color.New(color.FgRed).SprintFunc()
+// Create SprintXxx functions to mix strings with other non-colourized strings:
+yellow := colour.New(colour.FgYellow).SprintFunc()
+red := colour.New(colour.FgRed).SprintFunc()
 fmt.Printf("This is a %s and this is %s.\n", yellow("warning"), red("error"))
 
-info := color.New(color.FgWhite, color.BgGreen).SprintFunc()
+info := colour.New(colour.FgWhite, colour.BgGreen).SprintFunc()
 fmt.Printf("This %s rocks!\n", info("package"))
 
 // Use helper functions
-fmt.Println("This", color.RedString("warning"), "should be not neglected.")
-fmt.Printf("%v %v\n", color.GreenString("Info:"), "an important message.")
+fmt.Println("This", colour.RedString("warning"), "should be not neglected.")
+fmt.Printf("%v %v\n", colour.GreenString("Info:"), "an important message.")
 
-// Windows supported too! Just don't forget to change the output to color.Output
-fmt.Fprintf(color.Output, "Windows support: %s", color.GreenString("PASS"))
+// Windows supported too! Just don't forget to change the output to colour.Output
+fmt.Fprintf(colour.Output, "Windows support: %s", colour.GreenString("PASS"))
 ```
 
 ### Plug into existing code
 
 ```go
-// Use handy standard colors
-color.Set(color.FgYellow)
+// Use handy standard colours
+colour.Set(colour.FgYellow)
 
 fmt.Println("Existing text will now be in yellow")
 fmt.Printf("This one %s\n", "too")
 
-color.Unset() // Don't forget to unset
+colour.Unset() // Don't forget to unset
 
 // You can mix up parameters
-color.Set(color.FgMagenta, color.Bold)
-defer color.Unset() // Use it in your function
+colour.Set(colour.FgMagenta, colour.Bold)
+defer colour.Unset() // Use it in your function
 
 fmt.Println("All text will now be bold magenta.")
 ```
 
-### Disable/Enable color
+### Disable/Enable colour
 
-There might be a case where you want to explicitly disable/enable color output.
-the `go-isatty` package will automatically disable color output for non-tty
+There might be a case where you want to explicitly disable/enable colour output.
+the `go-isatty` package will automatically disable colour output for non-tty
 output streams (for example if the output were piped directly to `less`)
 
-`Color` has support to disable/enable colors both globally and for single color
-definitions. For example suppose you have a CLI app and a `--no-color` bool
-flag. You can easily disable the color output with:
+`Colour` has support to disable/enable colours both globally and for single colour
+definitions. For example suppose you have a CLI app and a `--no-colour` bool
+flag. You can easily disable the colour output with:
 
 ```go
 
-var flagNoColor = flag.Bool("no-color", false, "Disable color output")
+var flagNoColour = flag.Bool("no-colour", false, "Disable colour output")
 
-if *flagNoColor {
-	color.NoColor = true // disables colorized output
+if *flagNoColour {
+	colour.NoColour = true // disables colourized output
 }
 ```
 
-It also has support for single color definitions (local). You can
-disable/enable color output on the fly:
+It also has support for single colour definitions (local). You can
+disable/enable colour output on the fly:
 
 ```go
-c := color.New(color.FgCyan)
+c := colour.New(colour.FgCyan)
 c.Println("Prints cyan text")
 
-c.DisableColor()
-c.Println("This is printed without any color")
+c.DisableColour()
+c.Println("This is printed without any colour")
 
-c.EnableColor()
+c.EnableColour()
 c.Println("This prints again cyan...")
 ```
 

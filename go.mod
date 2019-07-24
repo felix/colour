@@ -1,4 +1,4 @@
-module github.com/felix/color
+module github.com/felix/colour
 
 go 1.12
 
